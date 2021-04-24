@@ -8,3 +8,12 @@ fn basic_roundtrip() {
 
     assert_eq!(xml, new_xml);
 }
+
+#[test]
+fn nuke_nospace() {
+    let xml = "<asdf></asdf>";
+    let elt: Element = xml.parse().unwrap();
+    let new_xml = elt.to_string();
+
+    assert_eq!(new_xml, "<asdf/>");
+}
