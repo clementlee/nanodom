@@ -1,14 +1,33 @@
 use crate::node::Node;
 use quick_xml::Reader;
 use quick_xml::{events::*, Writer};
-use std::collections::HashMap;
-use std::io::{Cursor, Write};
+use std::{collections::HashMap, fmt::Display};
+use std::{
+    io::{Cursor, Write},
+    str::FromStr,
+};
 
 #[derive(Debug)]
 pub struct Element {
     pub children: Vec<Node>,
     pub name: String,
     pub attrs: HashMap<String, String>,
+}
+
+impl Display for Element {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.to_str())?;
+
+        Ok(())
+    }
+}
+
+impl FromStr for Element {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Element::from(s))
+    }
 }
 
 impl Element {
